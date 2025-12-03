@@ -1,65 +1,184 @@
-import Image from "next/image";
+import { Doctor, DoctorsSection } from "./components/doctors";
+import { Hero } from "./components/layout";
+import { AboutSection } from "./components/layout/AboutSection";
+import { ContactSection } from "./components/layout/ContactSection";
+import { Service, ServicesSection } from "./components/services";
 
-export default function Home() {
+const services: Service[] = [
+  {
+    id: 1,
+    name: "HYDRA-FACIAL",
+    description: "Deep cleansing facial",
+    category: "Aesthetic",
+    image: "hf.png",
+  },
+  {
+    id: 2,
+    name: "CARBON PEEL",
+    description: "Carbon laser peel for glowing skin",
+    category: "Aesthetic",
+    image: "hf.png",
+  },
+  {
+    id: 3,
+    name: "OXYGENO",
+    description: "Oxygen facial treatment",
+    category: "Aesthetic",
+    image: "hf.png",
+  },
+  {
+    id: 4,
+    name: "PICO LASER",
+    description: "Skin rejuvenation with PICO laser",
+    category: "Aesthetic",
+    image: "hf.png",
+  },
+  {
+    id: 5,
+    name: "MICRO NEEDLING",
+    description: "Collagen induction therapy",
+    category: "Aesthetic",
+    image: "hf.png",
+  },
+  {
+    id: 6,
+    name: "HAIR & FACE PRP",
+    description: "PRP therapy for hair and face",
+    category: "Aesthetic",
+    image: "hf.png",
+  },
+  {
+    id: 7,
+    name: "Dental consultation",
+    description: "Personalized dental check-up",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 8,
+    name: "Dental surgeries",
+    description: "Safe and effective dental surgeries",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 9,
+    name: "Teeth whitening",
+    description: "Professional teeth whitening",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 10,
+    name: "Scaling & Polishing",
+    description: "Remove plaque and stains",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 11,
+    name: "Full mouth dentures",
+    description: "Custom dentures for your smile",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 12,
+    name: "Dental fillings",
+    description: "Cavity fillings with precision",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 13,
+    name: "Dental X-ray",
+    description: "Digital dental X-rays",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 14,
+    name: "Veneers",
+    description: "Cosmetic veneers for perfect teeth",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 15,
+    name: "Root canals",
+    description: "Pain-free root canal treatment",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 16,
+    name: "Crowns & bridges",
+    description: "Restore damaged teeth",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 17,
+    name: "Dental implants",
+    description: "Replace missing teeth with implants",
+    category: "Dental",
+    image: "hf.png",
+  },
+  {
+    id: 18,
+    name: "Braces & Aligners",
+    description: "Straighten teeth effectively",
+    category: "Dental",
+    image: "hf.png",
+  },
+];
+
+const doctors: Doctor[] = [
+  {
+    id: 1,
+    name: "Dr. Maham Farman",
+    designation: "Dental Surgeon",
+    education: "C-Endo, C-Ortho, C-Prostho",
+    image: "/Dr.Maham.png",
+  },
+  {
+    id: 2,
+    name: " Dr. Farrukh Aqil",
+    designation: "Consultant Dental Surgeon",
+    education: "BDS, MCPS",
+    image: "Dr.Farrukh.png",
+  },
+  {
+    id: 3,
+    name: "Dr. Rabia Afreen ",
+    designation: "Consultant Orthodontist",
+    education: "BDS, MDS (Ortho)",
+    image: "/Dr.Rabia.png",
+  },
+  {
+    id: 4,
+    name: "Dr. Hamza Khan",
+    designation: "General Dentist",
+    education: "Implantologist",
+    image: "Dr.HamzaKhan.png",
+  },
+  {
+    id: 5,
+    name: "Dr. Bilal Qureshi",
+    designation: "Consultant Dentist",
+    education: "",
+    image: "Dr.Bilal.png",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Hero />
+      <ServicesSection services={services} />
+      <AboutSection />
+      <DoctorsSection doctors={doctors} />
+      <ContactSection />
+    </>
   );
 }

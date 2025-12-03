@@ -1,26 +1,388 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@mantine/core/styles.css';
+/* @import '@mantine/dropzone/styles.css'; */
+@import '@mantine/notifications/styles.css';
+@import '@mantine/carousel/styles.css';
+/* @import '@mantine/dates/styles.css'; */
+/* @import '@mantine/charts/styles.css'; */
+/* @import "tw-animate-css"; */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Reset all paddings/margins */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
+/* Mantine CSS variables mapped to custom ones */
 @theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Mantine breakpoints for CSS modules (static values) */
+  --breakpoint-xs: 36em;
+  --breakpoint-sm: 48em;
+  --breakpoint-md: 62em;
+  --breakpoint-lg: 75em;
+  --breakpoint-xl: 88em;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Core root variables */
+:root {
+  --radius: var(--mantine-radius-md);
+
+  --background: var(--mantine-color-body);
+  --foreground: var(--mantine-color-text);
+
+  --card: var(--mantine-color-body);
+  --card-foreground: var(--mantine-color-text);
+
+  --popover: var(--mantine-color-body);
+  --popover-foreground: var(--mantine-color-text);
+
+  --primary: var(--mantine-color-primary-filled);
+  --primary-foreground: var(--mantine-color-white);
+
+  --secondary: var(--mantine-color-gray-1);
+  --secondary-foreground: var(--mantine-color-primary-text);
+
+  --muted: var(--mantine-color-gray-1);
+  --muted-foreground: var(--mantine-color-dimmed);
+
+  --accent: var(--mantine-color-gray-1);
+  --accent-foreground: var(--mantine-color-primary-text);
+
+  --destructive: var(--mantine-color-red-6);
+
+  --border: var(--mantine-color-gray-3);
+  --input: var(--mantine-color-gray-3);
+  --ring: var(--mantine-color-primary-outline);
+
+  --chart-1: var(--mantine-color-yellow-6);
+  --chart-2: var(--mantine-color-blue-6);
+  --chart-3: var(--mantine-color-indigo-6);
+  --chart-4: var(--mantine-color-green-6);
+  --chart-5: var(--mantine-color-orange-6);
+
+  --sidebar: var(--mantine-color-body);
+  --sidebar-foreground: var(--mantine-color-text);
+  --sidebar-primary: var(--mantine-color-primary-filled);
+  --sidebar-primary-foreground: var(--mantine-color-white);
+  --sidebar-accent: var(--mantine-color-gray-1);
+  --sidebar-accent-foreground: var(--mantine-color-primary-text);
+  --sidebar-border: var(--mantine-color-gray-3);
+  --sidebar-ring: var(--mantine-color-primary-outline);
+}
+
+/* Dark mode overrides */
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.552 0.016 285.938);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.552 0.016 285.938);
+}
+
+/* Responsive utility classes for hiddenFrom/visibleFrom functionality */
+.mantine-hidden-from-xs {
+  @media (min-width: 36em) {
+    display: none !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.mantine-hidden-from-sm {
+  @media (min-width: 48em) {
+    display: none !important;
+  }
+}
+
+.mantine-hidden-from-md {
+  @media (min-width: 62em) {
+    display: none !important;
+  }
+}
+
+.mantine-hidden-from-lg {
+  @media (min-width: 75em) {
+    display: none !important;
+  }
+}
+
+.mantine-hidden-from-xl {
+  @media (min-width: 88em) {
+    display: none !important;
+  }
+}
+
+.mantine-visible-from-xs {
+  @media (max-width: 35.99em) {
+    display: none !important;
+  }
+}
+
+.mantine-visible-from-sm {
+  @media (max-width: 47.99em) {
+    display: none !important;
+  }
+}
+
+.mantine-visible-from-md {
+  @media (max-width: 61.99em) {
+    display: none !important;
+  }
+}
+
+.mantine-visible-from-lg {
+  @media (max-width: 74.99em) {
+    display: none !important;
+  }
+}
+
+.mantine-visible-from-xl {
+  @media (max-width: 87.99em) {
+    display: none !important;
+  }
+}
+
+/* Container query utilities */
+.container-type-inline {
+  container-type: inline-size;
+}
+
+.container-type-size {
+  container-type: size;
+}
+
+/* Responsive text scaling */
+.responsive-text {
+  font-size: clamp(1rem, 2.5vw, 2rem);
+}
+
+/* Mobile-first responsive spacing */
+.responsive-spacing {
+  padding: var(--mantine-spacing-xs);
+  
+  @media (min-width: 36em) {
+    padding: var(--mantine-spacing-sm);
+  }
+  
+  @media (min-width: 48em) {
+    padding: var(--mantine-spacing-md);
+  }
+  
+  @media (min-width: 62em) {
+    padding: var(--mantine-spacing-lg);
+  }
+  
+  @media (min-width: 75em) {
+    padding: var(--mantine-spacing-xl);
+  }
+}
+
+/* Responsive grid fallbacks */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--mantine-spacing-md);
+  
+  @media (min-width: 36em) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: 48em) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @media (min-width: 62em) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .touch-optimized {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .touch-text {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* High DPI screen optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .high-dpi-optimized {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break-avoid {
+    break-inside: avoid;
+  }
+}
+
+/* Tailwind + Mantine base layer with responsive enhancements */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    /* Improve text rendering on all devices */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Better focus indicators for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Improve scrolling on mobile */
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Responsive container queries example */
+@container (max-width: 400px) {
+  .container-adaptive {
+    flex-direction: column;
+  }
+}
+
+@container (min-width: 401px) and (max-width: 600px) {
+  .container-adaptive {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@container (min-width: 601px) {
+  .container-adaptive {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+/* Hero Section Styles */
+.hero-section {
+  background: linear-gradient(135deg, #fff9e6 0%, #ffd01a 100%);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  
+  @media (min-width: 48em) {
+    min-height: 70vh;
+  }
+  
+  @media (min-width: 62em) {
+    min-height: 80vh;
+  }
+}
+
+.hero-title {
+  font-size: 1.75rem;
+  
+  @media (min-width: 48em) {
+    font-size: 2.5rem;
+  }
+  
+  @media (min-width: 62em) {
+    font-size: 3.5rem;
+  }
+}
+
+/* 3D Effect for Doctor Images */
+.doctor-image-wrapper:hover .doctor-image-3d {
+  transform: translateY(-10px) translateZ(30px) scale(1.05) !important;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 12px 30px rgba(0, 0, 0, 0.2),
+    0 4px 15px rgba(0, 0, 0, 0.15),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
 }
