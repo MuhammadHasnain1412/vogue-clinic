@@ -16,12 +16,19 @@ interface BookingDetails {
 export function formatWhatsAppNumber(phone: string): string {
   let cleaned = phone.replace(/[\s\-\(\)]/g, "");
 
+  // Remove leading +
+  if (cleaned.startsWith("+")) {
+    cleaned = cleaned.substring(1);
+  }
+
+  // If starts with 0, replace with 92
   if (cleaned.startsWith("0")) {
     cleaned = `92${cleaned.substring(1)}`;
   }
 
-  if (cleaned.startsWith("+")) {
-    cleaned = cleaned.substring(1);
+  // If starts with 3 and length is 10 (e.g. 3001234567), prepend 92
+  if (cleaned.startsWith("3") && cleaned.length === 10) {
+    cleaned = `92${cleaned}`;
   }
 
   return cleaned;

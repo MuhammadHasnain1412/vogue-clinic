@@ -155,9 +155,14 @@ export default function BookingsPage() {
                 {filteredBookings.map((booking) => (
                   <Table.Tr key={booking.id}>
                     <Table.Td>
-                      <Badge color="#3c4b22" variant="light">
-                        #{booking.id}
-                      </Badge>
+                      <Text
+                        fw={700}
+                        c="#3c4b22"
+                        size="sm"
+                        style={{ whiteSpace: "nowrap" }}
+                      >
+                        VC-{booking.id.toString().padStart(6, "0")}
+                      </Text>
                     </Table.Td>
                     <Table.Td>
                       <Text fw={500}>{booking.name}</Text>

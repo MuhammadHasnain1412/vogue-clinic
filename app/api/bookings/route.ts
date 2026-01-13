@@ -150,15 +150,7 @@ export async function POST(request: Request) {
         // For production, verify your domain at https://resend.com/domains
         const accountOwnerEmail = "muhammad.hasnain142002@gmail.com"; // Resend account owner email
 
-        // Send confirmation email to client
-        // Using account owner email for testing (Resend limitation)
-        try {
-          console.log(`Attempting to send email to client: ${email}`);
-          const clientResult = await resend.emails.send({
-            from: "Vogue Clinic <onboarding@resend.dev>",
-            to: accountOwnerEmail,
-            subject: `🎉 Booking Confirmed - ${service}`,
-            html: `
+        const emailHtml = `
               <!DOCTYPE html>
               <html>
               <head>
@@ -296,7 +288,17 @@ export async function POST(request: Request) {
                 </table>
               </body>
               </html>
-            `,
+            `;
+
+        // Send confirmation email to client
+        // Using account owner email for testing (Resend limitation)
+        try {
+          console.log(`Attempting to send email to client: ${email}`);
+          const clientResult = await resend.emails.send({
+            from: "Vogue Clinic <onboarding@resend.dev>",
+            to: accountOwnerEmail,
+            subject: `🎉 Booking Confirmed - ${service}`,
+            html: emailHtml,
           });
           console.log(
             "Booking notification email sent successfully:",
@@ -309,25 +311,14 @@ export async function POST(request: Request) {
           });
         }
 
-        // Send email to admin (also using account owner email for testing)
+        // Send email to admin (using same beautiful template)
         try {
           console.log(`Attempting to send admin notification`);
           const adminResult = await resend.emails.send({
             from: "Vogue Clinic <onboarding@resend.dev>",
             to: accountOwnerEmail, // Using account owner email due to Resend test domain limitation
             subject: `Admin Notification: New Booking - ${service}`,
-            html: `
-              <div style="font-family: Arial, sans-serif; padding: 20px;">
-                <h2>New Booking Notification</h2>
-                <p><strong>Client Name:</strong> ${name}</p>
-                <p><strong>Client Email:</strong> ${email}</p>
-                <p><strong>Phone:</strong> ${phone}</p>
-                <p><strong>Service:</strong> ${service}</p>
-                <p><strong>Date:</strong> ${date || "Not specified"}</p>
-                <p><strong>Time:</strong> ${time || "Not specified"}</p>
-                ${message ? `<p><strong>Message:</strong> ${message}</p>` : ""}
-              </div>
-            `,
+            html: emailHtml,
           });
           console.log(
             "Admin notification email sent successfully:",
@@ -358,9 +349,11 @@ export async function POST(request: Request) {
     const confirmationNumber = `VC-${bookingId.toString().padStart(6, "0")}`;
 
     // Generate WhatsApp confirmation (FREE - no API needed!)
-    const { createWhatsAppURL, generateConfirmationMessage } = await import(
-      "@/lib/whatsapp"
-    );
+    const {
+      createWhatsAppURL,
+      generateConfirmationMessage,
+      formatWhatsAppNumber,
+    } = await import("@/lib/whatsapp");
 
     const bookingDetails = {
       name,
@@ -371,8 +364,24 @@ export async function POST(request: Request) {
       confirmationNumber,
     };
 
-    // Create WhatsApp URL - customer sends to themselves
     const whatsappMessage = generateConfirmationMessage(bookingDetails);
+
+    // Send automatic WhatsApp via Twilio
+    try {
+      const { sendWhatsAppMessage } = await import("@/lib/twilio");
+      const formattedPhone = formatWhatsAppNumber(phone);
+      // Twilio expects E.164, formatWhatsAppNumber returns 923...
+      // We prepend + if missing, though sendWhatsAppMessage handles the prefix 'whatsapp:'
+      await sendWhatsAppMessage({
+        to: `+${formattedPhone}`,
+        body: whatsappMessage,
+      });
+    } catch (error) {
+      console.error("Failed to send automatic WhatsApp:", error);
+      // We don't block the response here
+    }
+
+    // Create WhatsApp URL - customer sends to themselves (backup/manual)
     const whatsappURL = createWhatsAppURL(phone, whatsappMessage);
 
     return NextResponse.json(

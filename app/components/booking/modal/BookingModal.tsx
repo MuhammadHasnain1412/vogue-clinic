@@ -124,13 +124,8 @@ export const BookingModal = ({
         setShowConfirmation(true);
         form.reset();
 
-        // Open WhatsApp with confirmation message (FREE!)
-        if (data.whatsappURL) {
-          // Small delay to let confirmation modal show first
-          setTimeout(() => {
-            window.open(data.whatsappURL, "_blank");
-          }, 1500);
-        }
+        // WhatsApp message is now sent automatically via Twilio from the server.
+        // No need to open the window manually.
       } else {
         throw new Error(data.error || "Failed to book appointment");
       }
