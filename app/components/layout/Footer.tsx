@@ -18,7 +18,7 @@ import {
 } from "@tabler/icons-react";
 import { useMediaQuery } from "@mantine/hooks";
 
-const mainColor = "#D4AF37";
+const mainColor = "#3c4b22";
 
 export const Footer = () => {
   const isMobile = useMediaQuery("(max-width: 48em)");
@@ -56,14 +56,15 @@ export const Footer = () => {
             <Group wrap="nowrap" align="flex-start" gap="sm">
               <IconMapPin
                 size={20}
-                style={{ 
-                  color: mainColor, 
+                style={{
+                  color: mainColor,
                   flexShrink: 0,
-                  marginTop: 3
+                  marginTop: 3,
                 }}
               />
               <Text size="sm" style={{ lineHeight: 1.4 }}>
-                Building C43/11, 2nd Floor, Block M3-A, Block M 3 A Lake City, Lahore
+                Building C43/11, 2nd Floor, Block M3-A, Block M 3 A Lake City,
+                Lahore
               </Text>
             </Group>
             <Group>
@@ -130,10 +131,7 @@ export const Footer = () => {
               href="https://instagram.com"
               target="_blank"
               size="sm"
-              style={{
-                color: "#333",
-                "&:hover": { color: mainColor },
-              }}
+              style={{ color: "#333" }}
             >
               Instagram
             </Anchor>
@@ -141,22 +139,16 @@ export const Footer = () => {
               href="https://facebook.com"
               target="_blank"
               size="sm"
-              style={{
-                color: "#333",
-                "&:hover": { color: mainColor },
-              }}
+              style={{ color: "#333" }}
             >
               Facebook
             </Anchor>
             <Anchor
-              href="/contact"
+              href="/admin/login" // Admin link
               size="sm"
-              style={{
-                color: "#333",
-                "&:hover": { color: mainColor },
-              }}
+              style={{ color: "#999" }}
             >
-              Contact
+              Admin
             </Anchor>
           </Group>
         </Group>

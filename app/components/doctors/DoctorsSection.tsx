@@ -1,14 +1,16 @@
 "use client";
 
-import { Container, SimpleGrid, Image, Text, Stack, Title, Center, Box } from "@mantine/core";
-
-export interface Doctor {
-  id: number;
-  name: string;
-  designation: string;
-  education: string;
-  image: string; // image URL
-}
+import {
+  Container,
+  SimpleGrid,
+  Image,
+  Text,
+  Stack,
+  Title,
+  Center,
+  Box,
+} from "@mantine/core";
+import { Doctor } from "../../../lib/data";
 
 interface DoctorsSectionProps {
   doctors: Doctor[];
@@ -20,7 +22,8 @@ export const DoctorsSection = ({ doctors }: DoctorsSectionProps) => {
       <Stack align="center" gap="xl">
         <Title order={2}>Our Doctors</Title>
         <Text color="dimmed" ta="center" size="lg" style={{ maxWidth: 600 }}>
-          Meet our experienced and qualified doctors who provide the best care for you.
+          Meet our experienced and qualified doctors who provide the best care
+          for you.
         </Text>
 
         <Box

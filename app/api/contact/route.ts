@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
+import prisma from "@/lib/db";
 
 export async function POST(request: Request) {
   try {
@@ -12,10 +12,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const [result] = await pool.execute(
-      "INSERT INTO contacts (name, email, phone, message) VALUES (?, ?, ?, ?)",
-      [name, email, phone, message]
-    );
+    const result = await prisma.contact.create({
+      data: {
+        name,
+        email,
+        phone: phone || null,
+        message,
+      },
+    });
 
     return NextResponse.json({
       success: true,

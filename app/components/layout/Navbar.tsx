@@ -2,22 +2,31 @@
 "use client";
 
 import { useState } from "react";
-import { AppShell, Group, Button, Box, Image, Burger, Drawer, Stack } from "@mantine/core";
+import {
+  AppShell,
+  Group,
+  Button,
+  Box,
+  Image,
+  Burger,
+  Drawer,
+  Stack,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { BookingModal } from "../booking/modal";
 
-const mainColor = "#D4AF37";
+const mainColor = "#3c4b22"; // Updated to Green
 
 export const Navbar = () => {
   const [modalOpened, setModalOpened] = useState(false);
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
-    toggle(); // Close mobile menu after clicking a link
+    close();
   };
 
   const navItems = [
@@ -31,32 +40,44 @@ export const Navbar = () => {
     <>
       <AppShell.Header
         style={{
-          borderBottom: "1px solid #eee",
-          background: "white",
+          borderBottom: "1px solid #f1f3f5",
+          background: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(10px)",
         }}
       >
-        <Box style={{ width: '100%', maxWidth: 1300, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--mantine-spacing-md) var(--mantine-spacing-xl)' }}>
+        <Box
+          style={{
+            width: "100%",
+            maxWidth: 1300,
+            margin: "0 auto",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "var(--mantine-spacing-md) var(--mantine-spacing-xl)",
+          }}
+        >
           <Image
             src="logo.svg"
-            w={{ base: 96, xs: 120, sm: 150, md: 200, lg: 240, xl: 280 }}
-            height="auto"
+            height={32}
+            width="auto"
             alt="Vogue Logo"
-            style={{ maxHeight: 120, minHeight: 44, minWidth: 72, maxWidth: 280, objectFit: 'contain', marginBottom: 0 }}
-            mb={{ lg: 4, xl: 8 }}
+            style={{ maxWidth: 120, objectFit: "contain" }}
           />
           {/* Desktop Navigation */}
           <Group gap={32} visibleFrom="sm">
             {navItems.map((item) => (
-              <Button 
-                key={item.label} 
-                variant="subtle" 
-                size="sm" 
+              <Button
+                key={item.label}
+                variant="subtle"
+                size="sm"
+                color="dark" // Dark text
                 onClick={() => scrollToSection(item.section)}
-                style={{ 
-                  minHeight: 44, 
-                  minWidth: 44, 
-                  fontSize: 16,
-                  cursor: 'pointer'
+                style={{
+                  minHeight: 44,
+                  minWidth: 44,
+                  fontSize: 15, // Slightly refined
+                  fontWeight: 500,
+                  cursor: "pointer",
                 }}
               >
                 {item.label}
@@ -68,11 +89,24 @@ export const Navbar = () => {
                 color: "white",
                 fontWeight: 600,
                 minHeight: 44,
-                minWidth: 44,
-                fontSize: 16,
+                px: 24,
+                fontSize: 15,
+                borderRadius: "24px", // Rounded pill
+                boxShadow: "0 4px 12px rgba(60, 75, 34, 0.2)",
+                transition: "transform 0.2s ease, box-shadow 0.2s ease",
               }}
               size="sm"
               onClick={() => setModalOpened(true)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-1px)";
+                e.currentTarget.style.boxShadow =
+                  "0 6px 16px rgba(60, 75, 34, 0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow =
+                  "0 4px 12px rgba(60, 75, 34, 0.2)";
+              }}
             >
               Book Now
             </Button>
@@ -83,7 +117,12 @@ export const Navbar = () => {
             onClick={toggle}
             size="md"
             hiddenFrom="sm"
-            style={{ zIndex: 1000, minHeight: 44, minWidth: 44, marginLeft: 24 }}
+            style={{
+              zIndex: 1000,
+              minHeight: 44,
+              minWidth: 44,
+              marginLeft: 24,
+            }}
           />
         </Box>
         {/* Mobile Navigation Drawer */}
@@ -104,7 +143,7 @@ export const Navbar = () => {
                 variant="subtle"
                 fullWidth
                 onClick={() => scrollToSection(item.section)}
-                style={{ textAlign: 'left' }}
+                style={{ textAlign: "left" }}
               >
                 {item.label}
               </Button>
@@ -127,7 +166,10 @@ export const Navbar = () => {
         </Drawer>
       </AppShell.Header>
 
-      <BookingModal opened={modalOpened} onClose={() => setModalOpened(false)} />
+      <BookingModal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+      />
     </>
   );
 };

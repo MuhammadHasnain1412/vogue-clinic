@@ -1,9 +1,7 @@
 import Providers from "./providers";
 import { Poppins } from "next/font/google";
-import { Footer, Navbar } from "./components/layout";
-import { AppShell } from "@mantine/core";
-import './globals.css';  // Add this line
-
+import { ConditionalLayout } from "./ConditionalLayout";
+import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,11 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <Providers>
-          <AppShell>
-            <Navbar />
-            {children}
-            <Footer />
-          </AppShell>
+          <ConditionalLayout>{children}</ConditionalLayout>
         </Providers>
       </body>
     </html>

@@ -33,8 +33,12 @@ export function BookingConfirmation({
         margin: '20px 0' 
       }}>
         <p><strong>Service:</strong> {service}</p>
-        <p><strong>Date:</strong> {new Date(date).toLocaleDateString()}</p>
-        <p><strong>Time:</strong> {time}</p>
+        {date && date !== "Not specified" && (
+          <p><strong>Date:</strong> {new Date(date).toLocaleDateString()}</p>
+        )}
+        {time && time !== "Not specified" && (
+          <p><strong>Time:</strong> {time}</p>
+        )}
       </div>
 
       <p>If you need to reschedule or have any questions, please contact us at {process.env.ADMIN_EMAIL}.</p>
